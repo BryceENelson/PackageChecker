@@ -18,8 +18,8 @@ public class PackageParser {
 
         for(String iterator : packagesInput){
             String[] splitString = iterator.split(":");
-            this.packageDependencyMap.put(splitString[0], splitString[1]);
-            System.out.println("Package Name: " + splitString[0] + " Dependency: " + splitString[1]);
+            this.packageDependencyMap.put(splitString[0], splitString[1].trim());
+            //System.out.println("Package Name: " + splitString[0] + " Dependency: " + splitString[1]);
         }
     }
 

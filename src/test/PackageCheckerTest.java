@@ -6,14 +6,21 @@ import org.junit.runners.Parameterized;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class PackageCheckerTest {
+public class PackageCheckerTest {
+	
+	String[] packages  = {"KittenService: ", "Leetmeme: Cyberportal", "Cyberportal: Ice", "CamelCaser: KittenService", "Fraudstream: Leetmeme", "Ice: "};;
+	PackageParser packageParser;
+	
+	public PackageCheckerTest() {
+		 packageParser = new PackageParser(packages);
+	}
+	
     @Test
             public void testParsePackages(){
-        String[] packages ={"KittenService: ", "Leetmeme: Cyberportal", "Cyberportal: Ice", "CamelCaser: KittenService", "Fraudstream: Leetmeme", "Ice: "};
-        PackageParser packageParser = new PackageParser(packages);
+       
         Map<String, String> testMap = packageParser.getPackageDependencyMap();
-        assertEquals("Ice", testMap.get("CyberPortal"));
+        assertEquals("Ice", testMap.get("Cyberportal"));
     }
 }
