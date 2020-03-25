@@ -53,5 +53,9 @@ public class DependencyChecker {
 		}
 	}
 	
-
+	public boolean hasCircularDependency() {
+		boolean circularDependency = false;
+		
+		return circularDependency;
+	}
 }
