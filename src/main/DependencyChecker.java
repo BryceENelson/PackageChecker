@@ -37,22 +37,14 @@ public class DependencyChecker {
 	public Map<String, String> getPackagesWithoutDependencies() {
 		return packagesWithoutDependencies;
 	}
-
-//	public void sortPackages() {
-//		for(Map.Entry<String, String> entry : allPackages.entrySet()) {
-//			if("".equalsIgnoreCase(entry.getValue().trim())){
-//				packagesWithoutDependencies.put(entry.getKey(), entry.getValue());
-//			}
-//			else {
-//				packagesWithDependencies.put(entry.getKey(), entry.getValue());
-//			}
-//		}
-//	}
 	
 	public boolean detectCircularDependency() {
 		ArrayList<String> dependencyChain = new ArrayList<String>();
 		for(Map.Entry<String, String> entry : allPackages.entrySet()) {
 			checkForCircularDependency(dependencyChain, entry.getKey());
+			if(this.hasCircularDependency) {
+				break;
+			}
 			dependencyChain.clear();
 		}
 		
@@ -62,11 +54,9 @@ public class DependencyChecker {
 	private void checkForCircularDependency(ArrayList<String> dependencyChain, String currentKey) {
 		if(dependencyChain.contains(currentKey)) {
 			this.hasCircularDependency = true;
-			System.out.println("Circular Dependency detected");
 			return;
 		}
 		if("".equalsIgnoreCase(currentKey)) {
-			System.out.println("Reached an end of the chain without hitting a circular dependency.");
 			return;
 		}
 		dependencyChain.add(currentKey);
