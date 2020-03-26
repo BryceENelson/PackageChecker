@@ -7,6 +7,10 @@ public class PackageChecker {
 
         String[] packages ={"KittenService: CamelCaser", "CamelCaser: "};
         PackageParser mainPackageParser = new PackageParser(packages);
+        
+        DependencyChecker dependencyChecker =  new DependencyChecker(mainPackageParser.getPackageDependencyMap());
+        
+        dependencyChecker.detectCircularDependency();
 
     }
 }
