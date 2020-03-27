@@ -1,16 +1,30 @@
 package main;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public class PackageChecker {
-    public static void main(String[] args) {
 
-        String[] packages ={"KittenService: CamelCaser", "CamelCaser: "};
-        PackageParser mainPackageParser = new PackageParser(packages);
+	private PackageParser packageParser;
+	private DependencyChecker dependencyChecker;
+	private DependencyGraph dependencyGraph;
+	public PackageChecker(String[] packages) {
+		packageParser = new PackageParser(packages);
+         
+        dependencyChecker =  new DependencyChecker(packageParser.getPackageDependencyMap());
         
-        DependencyChecker dependencyChecker =  new DependencyChecker(mainPackageParser.getPackageDependencyMap());
-        
-        dependencyChecker.detectCircularDependency();
+        if(!dependencyChecker.detectCircularDependency()) {
+        	  dependencyGraph = new DependencyGraph(packageParser.getPackageDependencyMap());
+        	  ArrayList<String> printOrder =  dependencyGraph.topologicalSortOfGraph();
+        	  String outputString = "";
+        	  for(String packageName : printOrder) {
+        		  outputString += packageName + ", ";
+        	  }
+        	  outputString = outputString.substring(0, outputString.length() - 2);
+        	  System.out.println(outputString);
+        }
+        else {
+        	System.out.println("Invalid input: Circular Dependency detected.");
+        }
+	}
 
-    }
 }
