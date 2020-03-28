@@ -25,29 +25,22 @@ public class DependencyGraph {
 		}
 	}
 	
+	public ArrayList<String> getPackageDependnecies(String packageName){
+		return adjacencyList.get(packageName);
+	}
+	
+	public Map<String, ArrayList<String>> getAdjacencyList(){
+		return adjacencyList;
+	}
+	
 	public void addNode(String name) {
-		//System.out.println("Creating node " + name);
 		this.adjacencyList.put(name, new ArrayList<String>());
 	}
 	
-//	public void addNode(String name, ArrayList<String> dependencies) {
-//		adjacencyList.put(name, dependencies);
-//	}
-	
-//	public void initializeDependencyArray(String node) {
-//		adjacencyList.get(node) = new ArrayList<GraphNode>();
-//	}
-	
 	public void addEdge(String packageName, String dependencyName) {
-		//System.out.println("Creating adjacencies for " + packageName);
-
-		if(adjacencyList.get(packageName) == null) {
-			//System.out.println("Can't Find dependencies");
-		}
 		if("".equalsIgnoreCase(dependencyName.trim())) {
 			return;
 		}
-		//System.out.println("Adding " + dependencyName + " as a dependency to " + packageName);
 		adjacencyList.get(packageName).add(dependencyName);
 	}
 	
@@ -71,13 +64,9 @@ public class DependencyGraph {
 			while(iterator.hasNext()) {
 				Map.Entry<String, ArrayList<String>> entry = iterator.next();
 				if(entry.getValue().isEmpty()) {
-					//System.out.println(entry.getKey() + " has " + entry.getValue().size() +" dependencies");
 					String nodeName = entry.getKey();
-					//System.out.println("Adding " + nodeName + " to print order.");
 					printOrder.add(nodeName);
-					//System.out.println("tempGraph's list size before removal: " + tempGraph.adjacencyList.size());
 					iterator.remove();
-					//System.out.println("tempGraph's list size after removal: " + tempGraph.adjacencyList.size());
 					for(Map.Entry<String, ArrayList<String>> innerEntry: tempGraph.adjacencyList.entrySet()) {
 						if(innerEntry.getValue().contains(nodeName)) {
 							tempGraph.removeEdge(innerEntry.getKey(), nodeName);

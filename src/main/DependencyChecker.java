@@ -36,10 +36,6 @@ public class DependencyChecker {
 	
 	private void checkForCircularDependency(ArrayList<String> dependencyChain, String currentKey) {
 		if(dependencyChain.contains(currentKey)) {
-			
-			for(String name:dependencyChain) {
-	            System.out.println(name);
-	        }
 			this.hasCircularDependency = true;
 			return;
 		}
